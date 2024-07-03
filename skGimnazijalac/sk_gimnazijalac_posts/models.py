@@ -2,6 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class Image(models.Model):
+    id = models.AutoField(primary_key=True)
+    content = models.BinaryField(null=False)
+
+    class Meta:
+        db_table = 'image'
+
+
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=2000)
@@ -9,7 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE, db_column='author_id')
     date = models.DateField()
-    src = models.CharField(max_length=100, null=True)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, db_column='image_id')
 
     class Meta:
         db_table = 'post'
